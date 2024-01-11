@@ -34,8 +34,7 @@ jobs:
 
     - name: Build ITSS
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      run: msbuild ${{env.PROJECT_FILE}} 
-      /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:OutputPath=${{env.OUTPUT_DIRECTORY}}
+      run: msbuild ${{env.PROJECT_FILE}} /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:OutputPath=${{env.OUTPUT_DIRECTORY}}
         
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
