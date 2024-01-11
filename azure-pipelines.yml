@@ -25,11 +25,25 @@ steps:
     echo ${{variables.OUTPUT_DIRECTORY}}
     echo $(solution)
     echo $(project)
+    echo "Structure of work folder of this pipeline:"
+    tree $(Agent.WorkFolder)\1 /f
+
+    echo "Build.ArtifactStagingDirectory:" 
+
+    echo "$(Build.ArtifactStagingDirectory)"
+
+    echo "Build.BinariesDirectory:" 
+
+    echo "$(Build.BinariesDirectory)"
+
+    echo "Build.SourcesDirectory:"
+
+    echo "$(Build.SourcesDirectory)"
 
 - powershell: |
     Write-Host "Show all folder content ArtifactStagingDirectory"
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -Recurse -Force
-    ls $(Build.ArtifactStagingDirectory)
+    ls -Path $(Build.ArtifactStagingDirectory)
 
 - task: CmdLine@2
   inputs:
