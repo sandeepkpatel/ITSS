@@ -1,0 +1,46 @@
+name: MSBuild
+
+on: push
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+  
+  # Project Files
+  PROJECT_FILE: ./ITSS/ITSS.csproj
+    
+  # Output directory path for the build archive
+  OUTPUT_DIRECTORY: ../Output/ITSS
+  
+  # Configuration type to build.
+ 
+  ARTIFACTS_DIRECTORY: ./Output/ITSS/_PublishedWebsites/ITSS/
+   
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build ITSS
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild ${{env.PROJECT_FILE}} 
+      /p:Configuration=${{env.BUILD_CONFIGURATION}} /p:OutputPath=${{env.OUTPUT_DIRECTORY}}
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+      # Artifact name
+        name: deploy
+        path: |
+          ${{env.ARTIFACTS_DIRECTORY}}
