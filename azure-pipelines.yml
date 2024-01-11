@@ -29,7 +29,7 @@ steps:
 - powershell: |
     Write-Host "Show all folder content ArtifactStagingDirectory"
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -Recurse -Force
-    ls
+    ls $(Build.ArtifactStagingDirectory)
 
 - task: CmdLine@2
   inputs:
