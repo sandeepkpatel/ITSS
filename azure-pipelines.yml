@@ -29,6 +29,13 @@ steps:
 - powershell: |
     Write-Host "Show all folder content ArtifactStagingDirectory"
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -Recurse -Force
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your PowerShell commands here.
+          ls
+          Write-Host "Hello World"
 
 - task: CmdLine@2
   inputs:
