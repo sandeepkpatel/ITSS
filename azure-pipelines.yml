@@ -21,7 +21,8 @@ variables:
 steps:
 - script: |
     echo $(Build.ArtifactStagingDirectory)
-    echo $(OUTPUT_DIRECTORY)
+    echo $(Build.ArtifactStagingDirectory)/'Output/ITSS'
+    echo ${{variables.OUTPUT_DIRECTORY}}
 
 # - task: NuGetToolInstaller@1
 
