@@ -16,12 +16,11 @@ variables:
   buildConfiguration: 'Release'
   OUTPUT_DIRECTORY: '../Output/ITSS'
   ARTIFACTS_DIRECTORY: './Output/ITSS/_PublishedWebsites/ITSS/'
-  name: one
-  value: initialValue 
+
 
 steps:
 - script: |
-    echo ${{ variables.one }} # outputs initialValue
+    echo $(Build.ArtifactStagingDirectory)
 
 # - task: NuGetToolInstaller@1
 
