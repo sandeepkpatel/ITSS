@@ -66,7 +66,35 @@ steps:
 #   inputs:
 #     restoreSolution: '$(solution)'
 
-# - task: VSBuild@1
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.csproj'
+    msbuildArchitecture: 'x64'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
+ 
+- script: |
+    echo $(Build.ArtifactStagingDirectory)
+    echo $(Build.ArtifactStagingDirectory)\$(OUTPUT_DIRECTORY)
+    echo ${{variables.OUTPUT_DIRECTORY}}
+    echo $(solution)
+    echo $(project)
+    echo "Structure of work folder of this pipeline:"
+    tree $(Agent.WorkFolder)\1 /f
+
+    echo "Build.ArtifactStagingDirectory:" 
+
+    dir "$(Build.ArtifactStagingDirectory)"
+
+    echo "Build.BinariesDirectory:" 
+
+    echo "$(Build.BinariesDirectory)"
+
+    echo "Build.SourcesDirectory:"
+
+    echo "$(Build.SourcesDirectory)"
+
 #   inputs:
 #     solution: '$(project)'
 #     msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(OUTPUT_DIRECTORY) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(ARTIFACTS_DIRECTORY)"'
