@@ -16,17 +16,22 @@ variables:
   buildConfiguration: 'Release'
   OUTPUT_DIRECTORY: '../Output/ITSS'
   ARTIFACTS_DIRECTORY: './Output/ITSS/_PublishedWebsites/ITSS/'
+  name: one
+  value: initialValue 
 
 steps:
-- task: NuGetToolInstaller@1
+- script: |
+    echo ${{ variables.one }} # outputs initialValue
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+# - task: NuGetToolInstaller@1
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(project)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(OUTPUT_DIRECTORY) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(ARTIFACTS_DIRECTORY)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+# - task: NuGetCommand@2
+#   inputs:
+#     restoreSolution: '$(solution)'
+
+# - task: VSBuild@1
+#   inputs:
+#     solution: '$(project)'
+#     msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(OUTPUT_DIRECTORY) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(ARTIFACTS_DIRECTORY)"'
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
