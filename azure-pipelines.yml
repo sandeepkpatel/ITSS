@@ -29,9 +29,21 @@ steps:
 - powershell: |
     Write-Host "Show all folder content ArtifactStagingDirectory"
     Get-ChildItem -Path $(Build.ArtifactStagingDirectory)\*.* -Recurse -Force
-    errorActionPreference: continue
-    displayName: 'PowerShell Script List folder structure'
-    continueOnError: true
+
+- task: CmdLine@2
+  inputs:
+        script: |
+          echo "Structure of work folder of this pipeline:"
+          tree $(Agent.WorkFolder)/1
+
+          echo "Build.ArtifactStagingDirectory:" 
+          echo "$(Build.ArtifactStagingDirectory)"
+
+          echo "Build.BinariesDirectory:" 
+          echo "$(Build.BinariesDirectory)"
+
+          echo "Build.SourcesDirectory:"
+          echo "$(Build.SourcesDirectory)"
 
 # - task: NuGetToolInstaller@1
 
