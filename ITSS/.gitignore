@@ -1,0 +1,15 @@
+# URL : https://www.atlassian.com/git/tutorials/saving-changes/gitignore
+# A double asterisk matches zero or more directories.
+# Wildcards can be used in directory names as well.
+#skip following folders and files
+
+**/obj
+**/.vs
+**/bin
+**/*.csproj.user
+**/*.rptproj.rsuser
+**/*DotSettings.user
+
+#do not skip following files
+!**/*.dll
+!**/*.exe
