@@ -76,23 +76,23 @@ steps:
 
  
 - script: |
-    echo $(Build.ArtifactStagingDirectory)
-    echo $(Build.ArtifactStagingDirectory)\$(OUTPUT_DIRECTORY)
-    echo ${{variables.OUTPUT_DIRECTORY}}
-    echo $(solution)
-    echo $(project)
-    echo "Structure of work folder of this pipeline:"
-    tree $(Agent.WorkFolder)\1 /f
+    # echo $(Build.ArtifactStagingDirectory)
+    # echo $(Build.ArtifactStagingDirectory)\$(OUTPUT_DIRECTORY)
+    # echo ${{variables.OUTPUT_DIRECTORY}}
+    # echo $(solution)
+    # echo $(project)
+    # echo "Structure of work folder of this pipeline:"
+    # tree $(Agent.WorkFolder)\1 /f
 
     echo "Build.ArtifactStagingDirectory:" 
 
-    dir "$(Build.ArtifactStagingDirectory)"
+    dir "$(Build.ArtifactStagingDirectory)\_PublishedWebsites\"
 
-    echo "Build.BinariesDirectory:" 
+    # echo "Build.BinariesDirectory:" 
 
-    echo "$(Build.BinariesDirectory)"
+    # echo "$(Build.BinariesDirectory)"
 
-    echo "Build.SourcesDirectory:"
+    # echo "Build.SourcesDirectory:"
 
 
 
