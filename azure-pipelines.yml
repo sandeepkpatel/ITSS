@@ -72,7 +72,7 @@ steps:
     msbuildArchitecture: 'x64'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
-    msbuildArgs: '/p:OutputPath=$(Build.ArtifactStagingDirectory)''
+    msbuildArgs: '/p:OutputPath=$(Build.ArtifactStagingDirectory)'
 
  
 - script: |
@@ -94,7 +94,7 @@ steps:
 
     echo "Build.SourcesDirectory:"
 
-    echo "$(Build.SourcesDirectory)"
+
 
 #   inputs:
 #     solution: '$(project)'
