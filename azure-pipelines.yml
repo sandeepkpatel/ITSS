@@ -21,6 +21,7 @@ variables:
 steps:
 - script: |
     echo $(Build.ArtifactStagingDirectory)
+    echo $(OUTPUT_DIRECTORY)
 
 # - task: NuGetToolInstaller@1
 
