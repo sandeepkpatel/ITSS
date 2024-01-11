@@ -14,15 +14,17 @@ variables:
   project: '**/ITSS/ITSS.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
-  OUTPUT_DIRECTORY: '../Output/ITSS'
+  OUTPUT_DIRECTORY: 'Output\ITSS'
   ARTIFACTS_DIRECTORY: './Output/ITSS/_PublishedWebsites/ITSS/'
 
 
 steps:
 - script: |
     echo $(Build.ArtifactStagingDirectory)
-    echo $(Build.ArtifactStagingDirectory)/'Output/ITSS'
+    echo $(Build.ArtifactStagingDirectory)\$(OUTPUT_DIRECTORY)
     echo ${{variables.OUTPUT_DIRECTORY}}
+    echo $(solution)
+    echo $(project)
 
 # - task: NuGetToolInstaller@1
 
