@@ -45,7 +45,7 @@ steps:
   inputs:
     script: |
       echo "Structure of work folder of this pipeline:"
-      tree $(Agent.WorkFolder)\1 /f
+      # tree $(Agent.WorkFolder)\1 /f
 
       # echo "Build.ArtifactStagingDirectory:" 
 
@@ -61,5 +61,5 @@ steps:
       
       echo "Pipeline.Workspace"
       
-      tree $(Pipeline.Workspace) /f
+      tree $(Pipeline.Workspace)\a\_PublishedWebsites\ITSS /f
 
