@@ -35,9 +35,9 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
-  inputs:
-    ArtifactName: 'drop'
-    pathToPublish: '$(build.artifactStagingDirectory)' 
+  # inputs:
+  #   ArtifactName: 'drop'
+  #   pathToPublish: '$(build.artifactStagingDirectory)' 
     
 
 
@@ -47,19 +47,19 @@ steps:
       echo "Structure of work folder of this pipeline:"
       tree $(Agent.WorkFolder)\1 /f
 
-      echo "Build.ArtifactStagingDirectory:" 
+      # echo "Build.ArtifactStagingDirectory:" 
 
-      tree "$(Build.ArtifactStagingDirectory)"
+      # tree "$(Build.ArtifactStagingDirectory)"
 
-      echo "Build.BinariesDirectory:" 
+      # echo "Build.BinariesDirectory:" 
 
-      tree "$(Build.BinariesDirectory)"
+      # tree "$(Build.BinariesDirectory)"
 
-      echo "Build.SourcesDirectory:"
+      # echo "Build.SourcesDirectory:"
 
-      tree "$(Build.SourcesDirectory)"
+      # tree "$(Build.SourcesDirectory)"
       
       echo "Pipeline.Workspace"
       
-      tree $(Pipeline.Workspace)
+      tree $(Pipeline.Workspace) /f
 
