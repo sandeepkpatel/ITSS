@@ -22,19 +22,19 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
+- task: VSBuild@1
+  inputs:
+    solution: '$(project)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+
 # - task: VSBuild@1
 #   inputs:
 #     solution: '$(project)'
 #     msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
-
-- task: MSBuild@1
-  inputs:
-    solution: '**/*.csproj'
-    msbuildArchitecture: 'x64'
-    msbuildArguments: /p:Configuration=$(buildConfiguration) /p:OutputPath=$(Build.ArtifactStagingDirectory)
-
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
