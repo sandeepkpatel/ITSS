@@ -22,16 +22,16 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
+- task: MSBuild@1
   inputs:
     solution: '$(project)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    msbuildArguments: '/p:OutputPath=$(Build.ArtifactStagingDirectory)'
 
 # - task: VSBuild@1
 #   inputs:
-#     solution: '$(project)'
+#     solution: '$(solution)'
 #     msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
@@ -53,9 +53,9 @@ steps:
       echo "Structure of work folder of this pipeline:"
       # tree $(Agent.WorkFolder)\1 /f
 
-      # echo "Build.ArtifactStagingDirectory:" 
+      echo "Build.ArtifactStagingDirectory:" 
 
-      # tree "$(Build.ArtifactStagingDirectory)"
+      tree "$(Build.ArtifactStagingDirectory)"
 
       # echo "Build.BinariesDirectory:" 
 
