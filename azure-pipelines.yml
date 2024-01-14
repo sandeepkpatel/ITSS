@@ -23,9 +23,16 @@ variables:
 steps:
 - task: NuGetToolInstaller@1
 
-# - task: NuGetCommand@2
-#   inputs:
-#     restoreSolution: '$(solution)'
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: MSBuild@1
+  inputs:
+    solution: $(project)
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    msbuildArguments: '/p:OutputPath=$(Build.ArtifactStagingDirectory)'
 
 # - task: VSBuild@1
 #   inputs:
@@ -34,12 +41,13 @@ steps:
 #     platform: '$(buildPlatform)'
 #     configuration: '$(buildConfiguration)'
 
-# - task: VSTest@2
-#   inputs:
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
   
-# - task: PublishBuildArtifacts@1
+- task: PublishBuildArtifacts@1
+
 - task: CmdLine@2
   inputs:
     script: |
@@ -47,15 +55,15 @@ steps:
       tree $(Agent.WorkFolder)\1 /f
 
       echo "Build.ArtifactStagingDirectory:" 
+      tree $(Build.ArtifactStagingDirectory)\1 /f
 
-      echo "$(Build.ArtifactStagingDirectory)"
+      # echo "$(Build.ArtifactStagingDirectory)"
 
-      echo "Build.BinariesDirectory:" 
+      # echo "Build.BinariesDirectory:" 
 
-      echo "$(Build.BinariesDirectory)"
+      # echo "$(Build.BinariesDirectory)"
 
-      echo "Build.SourcesDirectory:"
+      # echo "Build.SourcesDirectory:"
 
-      echo "$(Build.SourcesDirectory)"
-      echo "Parameters"
-      echo $(WebsiteName)
+      # echo "$(Build.SourcesDirectory)"
+ 
