@@ -58,7 +58,6 @@ steps:
     DotNetVersionForWebsite: 'v4.0'
     PipeLineModeForWebsite: 'Integrated'
     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
-    Bindings: '$(Parameters.Bindings)'
   
 - task: IISWebAppDeploymentOnMachineGroup@0
   displayName: 'Deploy ITSS Website'
