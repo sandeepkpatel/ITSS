@@ -61,10 +61,11 @@ steps:
     Bindings: '$(Parameters.Bindings)'
   
 - task: IISWebAppDeploymentOnMachineGroup@0
-    inputs:
-      WebSiteName: 'Default Web Site'
-      VirtualApplication: 'ITSS'
-      Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
+  displayName: 'Deploy ITSS Website'
+  inputs:
+    WebSiteName: 'Default Web Site'
+    VirtualApplication: 'ITSS'
+    Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
 #  - task: IISWebAppDeploymentOnMachineGroup@0
 #    displayName: 'Deploy IIS Website/App: '
 #    inputs:
