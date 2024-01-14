@@ -21,6 +21,7 @@ variables:
   Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"80","hostname":"","sslThumbprint":"","sniFlag":false}]}'
    
 steps:
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
@@ -43,27 +44,30 @@ steps:
   # inputs:
   #   ArtifactName: 'drop'
   #   pathToPublish: '$(build.artifactStagingDirectory)' 
-    
-# - task: IISWebAppManagementOnMachineGroup@0
-#   displayName: 'IIS Web App Manage'
-#   inputs:
-#       IISDeploymentType: 'IISWebsite'
-#       AppPoolNameForWebsite: 'DefaultAppPool'
-#       AppPoolNameForApplication: 'DefaultAppPool'
-#       # ActionIISWebsite: '$(Parameters.ActionIISWebsite)'
-#       WebsiteName: 'Default Web Site'
-#       WebsitePhysicalPath: 'C:\Git\Deployment\ITSS'
-#       # AddBinding: '$(Parameters.AddBinding)'
-#       Bindings: '$(Parameters.Bindings)'
-#       ParentWebsiteNameForVD: 'Default Web Site'
-#       VirtualPathForVD: '/ITSS'
-#       VirtualPathForApplication: '/ITSS'
-#       AppPoolName: 'DefaultAppPool'
 
-# - task: IISWebAppDeploymentOnMachineGroup@0
-#   displayName: 'Deploy IIS Website/App: '
-#   inputs:
-#     WebSiteName: 'Default Web Site'
+- task: IISWebAppManagementOnMachineGroup@0
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'CreateOrUpdateWebsite'
+    WebsiteName: 'Default Web Site'
+    WebsitePhysicalPath: 'C:\Projects\ITSS'
+    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+    AddBinding: true
+    CreateOrUpdateAppPoolForWebsite: true
+    AppPoolNameForWebsite: 'DefaultAppPool'
+    DotNetVersionForWebsite: 'v4.0'
+    PipeLineModeForWebsite: 'Integrated'
+    AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+    Bindings: '$(Parameters.Bindings)'
+  
+- task: IISWebAppDeploymentOnMachineGroup@0
+    inputs:
+      WebSiteName: 'Default Web Site'
+      VirtualApplication: 'ITSS'
+      Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
+#  - task: IISWebAppDeploymentOnMachineGroup@0
+#    displayName: 'Deploy IIS Website/App: '
+#    inputs:
+#     WebSiteName: '$(Parameters.WebsiteName)'
 #     VirtualApplication: ITSS
 #     Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
-
