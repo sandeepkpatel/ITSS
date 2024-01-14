@@ -54,6 +54,6 @@ steps:
       echo "Structure of work folder of this pipeline:"
       tree $(Agent.WorkFolder)\1 /f
 
-      echo "Build.ArtifactStagingDirectory:" 
-      tree $(Build.ArtifactStagingDirectory) /f
+      echo "System.DefaultWorkingDirectory"
+      tree $(System.DefaultWorkingDirectory) /f
  
