@@ -14,6 +14,11 @@ variables:
   project: '**/*.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  IISDeploymentType: 'IISWebsite'
+  ActionIISWebsite: 'CreateOrUpdateWebsite'
+  WebsiteName: 'Default Web Site'
+  AddBinding: 'True'
+  Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"80","hostname":"","sslThumbprint":"","sniFlag":false}]}'
    
 steps:
 - task: NuGetToolInstaller@1
@@ -29,12 +34,6 @@ steps:
     configuration: '$(buildConfiguration)'
     msbuildArguments: '/p:OutputPath=$(Build.ArtifactStagingDirectory)'
 
-# - task: VSBuild@1
-#   inputs:
-#     solution: '$(solution)'
-#     msbuildArgs: '/p:DeployOnBuild=true /p:OutputPath=$(Build.ArtifactStagingDirectory) /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-#     platform: '$(buildPlatform)'
-#     configuration: '$(buildConfiguration)'
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
@@ -47,25 +46,27 @@ steps:
     
 
 
-- task: CmdLine@2
+steps:
+- task: IISWebAppManagementOnMachineGroup@0
+  displayName: 'IIS Web App Manage'
   inputs:
-    script: |
-      echo "Structure of work folder of this pipeline:"
-      # tree $(Agent.WorkFolder)\1 /f
+    IISDeploymentType: '$(Parameters.IISDeploymentType)'
+    ActionIISWebsite: '$(Parameters.ActionIISWebsite)'
+    WebsiteName: '$(Parameters.WebsiteName)'
+    WebsitePhysicalPath: 'C:\Git\Deployment\ITSS'
+    AddBinding: '$(Parameters.AddBinding)'
+    Bindings: '$(Parameters.Bindings)'
+    ParentWebsiteNameForVD: '$(Parameters.WebsiteName)'
+    VirtualPathForVD: '$(Parameters.VirtualPathForApplication)'
+    ParentWebsiteNameForApplication: '$(Parameters.WebsiteName)'
+    VirtualPathForApplication: '$(Parameters.VirtualPathForApplication)'
+    AppPoolName: '$(Parameters.AppPoolName)'
 
-      echo "Build.ArtifactStagingDirectory:" 
-
-      tree "$(Build.ArtifactStagingDirectory)"
-
-      # echo "Build.BinariesDirectory:" 
-
-      # tree "$(Build.BinariesDirectory)"
-
-      # echo "Build.SourcesDirectory:"
-
-      # tree "$(Build.SourcesDirectory)"
-      
-      echo "Pipeline.Workspace"
-      
-      tree $(Pipeline.Workspace)\a\_PublishedWebsites\ITSS /f
+steps:
+- task: IISWebAppDeploymentOnMachineGroup@0
+  displayName: 'Deploy IIS Website/App: '
+  inputs:
+    WebSiteName: 'Default Web Site'
+    VirtualApplication: ITSS
+    Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
 
