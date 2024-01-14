@@ -11,26 +11,46 @@ pool:
 
 variables:
   solution: '**/*.sln'
+  project: '**/*.csproj'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  IISDeploymentType: 'IISWebsite'
+  ActionIISWebsite: 'CreateOrUpdateWebsite'
+  WebsiteName: 'Default Web Site'
+  AddBinding: 'True'
+  Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"80","hostname":"","sslThumbprint":"","sniFlag":false}]}'
 
 steps:
-- task: NuGetToolInstaller@1
+# - task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+# - task: NuGetCommand@2
+#   inputs:
+#     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+# - task: VSBuild@1
+#   inputs:
+#     solution: '$(solution)'
+#     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+# - task: VSTest@2
+#   inputs:
+#     platform: '$(buildPlatform)'
+#     configuration: '$(buildConfiguration)'
   
-- task: PublishBuildArtifacts@1
+# - task: PublishBuildArtifacts@1
+echo "Structure of work folder of this pipeline:"
+tree $(Agent.WorkFolder)\1 /f
+
+echo "Build.ArtifactStagingDirectory:" 
+
+echo "$(Build.ArtifactStagingDirectory)"
+
+echo "Build.BinariesDirectory:" 
+
+echo "$(Build.BinariesDirectory)"
+
+echo "Build.SourcesDirectory:"
+
+echo "$(Build.SourcesDirectory)"
