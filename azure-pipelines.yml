@@ -56,14 +56,4 @@ steps:
 
       echo "Build.ArtifactStagingDirectory:" 
       tree $(Build.ArtifactStagingDirectory) /f
-
-      # echo "$(Build.ArtifactStagingDirectory)"
-
-      # echo "Build.BinariesDirectory:" 
-
-      # echo "$(Build.BinariesDirectory)"
-
-      # echo "Build.SourcesDirectory:"
-
-      # echo "$(Build.SourcesDirectory)"
  
