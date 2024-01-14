@@ -21,7 +21,7 @@ variables:
   Bindings: '{"bindings":[{"protocol":"http","ipAddress":"All Unassigned","port":"80","hostname":"","sslThumbprint":"","sniFlag":false}]}'
 
 steps:
-# - task: NuGetToolInstaller@1
+- task: NuGetToolInstaller@1
 
 # - task: NuGetCommand@2
 #   inputs:
@@ -40,17 +40,22 @@ steps:
 #     configuration: '$(buildConfiguration)'
   
 # - task: PublishBuildArtifacts@1
-echo "Structure of work folder of this pipeline:"
-tree $(Agent.WorkFolder)\1 /f
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo "Structure of work folder of this pipeline:"
+      tree $(Agent.WorkFolder)\1 /f
 
-echo "Build.ArtifactStagingDirectory:" 
+      echo "Build.ArtifactStagingDirectory:" 
 
-echo "$(Build.ArtifactStagingDirectory)"
+      echo "$(Build.ArtifactStagingDirectory)"
 
-echo "Build.BinariesDirectory:" 
+      echo "Build.BinariesDirectory:" 
 
-echo "$(Build.BinariesDirectory)"
+      echo "$(Build.BinariesDirectory)"
 
-echo "Build.SourcesDirectory:"
+      echo "Build.SourcesDirectory:"
 
-echo "$(Build.SourcesDirectory)"
+      echo "$(Build.SourcesDirectory)"
+      echo "Parameters"
+      echo $(Parameters.WebsiteName)
