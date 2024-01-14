@@ -58,4 +58,4 @@ steps:
 
       echo "$(Build.SourcesDirectory)"
       echo "Parameters"
-      echo $(Parameters.WebsiteName)
+      echo $(WebsiteName)
