@@ -47,16 +47,24 @@ steps:
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: 'IIS Web App Manage'
   inputs:
-      IISDeploymentType: '$(Parameters.IISDeploymentType)'
-      ActionIISWebsite: '$(Parameters.ActionIISWebsite)'
+      IISDeploymentType: 'IISWebsite'
+      AppPoolNameForWebsite: 'DefaultAppPool'
+      AppPoolNameForApplication: 'DefaultAppPool'
+      # ActionIISWebsite: '$(Parameters.ActionIISWebsite)'
       WebsiteName: '$(Parameters.WebsiteName)'
       WebsitePhysicalPath: 'C:\Git\Deployment\ITSS'
-      AddBinding: '$(Parameters.AddBinding)'
+      # AddBinding: '$(Parameters.AddBinding)'
       Bindings: '$(Parameters.Bindings)'
       ParentWebsiteNameForVD: '$(Parameters.WebsiteName)'
       VirtualPathForVD: '$(Parameters.VirtualPathForApplication)'
       ParentWebsiteNameForApplication: '$(Parameters.WebsiteName)'
-      VirtualPathForApplication: '$(Parameters.VirtualPathForApplication)'
-      AppPoolName: '$(Parameters.AppPoolName)'
+      VirtualPathForApplication: '/ITSS'
+      AppPoolName: 'DefaultAppPool'
 
+- task: IISWebAppDeploymentOnMachineGroup@0
+  displayName: 'Deploy IIS Website/App: '
+  inputs:
+    WebSiteName: 'Default Web Site'
+    VirtualApplication: ITSS
+    Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
 
