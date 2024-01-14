@@ -48,6 +48,28 @@ steps:
   
 - task: PublishBuildArtifacts@1
 
+- task: IISWebAppManagementOnMachineGroup@0
+  displayName: 'IIS Web App Manage'
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'CreateOrUpdateWebsite'
+    AppPoolNameForWebsite: 'DefaultAppPool'
+    AppPoolNameForApplication: 'DefaultAppPool'
+    WebsiteName: 'Default Web Site'
+    WebsitePhysicalPath: 'C:\Projects\ITSS'
+    AddBinding: True
+    Bindings: '$(Bindings)'
+    ParentWebsiteNameForVD: 'Default Web Site'
+    VirtualPathForVD: '/ITSS'
+    ParentWebsiteNameForApplication: 'Default Web Site'
+    VirtualPathForApplication: '/ITSS'
+    AppPoolName: 'DefaultAppPool'
+
+- task: IISWebAppDeploymentOnMachineGroup@0
+  inputs:
+    WebSiteName: 'Default Web Site'
+    VirtualApplication: 'ITSS'
+    Package: '$(build.artifactStagingDirectory)\_PublishedWebsites\ITSS'
 - task: CmdLine@2
   inputs:
     script: |
