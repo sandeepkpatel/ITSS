@@ -45,19 +45,19 @@ steps:
   #   ArtifactName: 'drop'
   #   pathToPublish: '$(build.artifactStagingDirectory)' 
 
-# - task: IISWebAppManagementOnMachineGroup@0
-#   inputs:
-#     IISDeploymentType: 'IISWebsite'
-#     ActionIISWebsite: 'CreateOrUpdateWebsite'
-#     WebsiteName: 'Default Web Site'
-#     WebsitePhysicalPath: 'C:\Projects\ITSS'
-#     WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-#     AddBinding: true
-#     CreateOrUpdateAppPoolForWebsite: true
-#     AppPoolNameForWebsite: 'DefaultAppPool'
-#     DotNetVersionForWebsite: 'v4.0'
-#     PipeLineModeForWebsite: 'Integrated'
-#     AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+- task: IISWebAppManagementOnMachineGroup@0
+  inputs:
+    IISDeploymentType: 'IISWebsite'
+    ActionIISWebsite: 'CreateOrUpdateWebsite'
+    WebsiteName: 'Default Web Site'
+    WebsitePhysicalPath: 'C:\Projects\ITSS'
+    WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+    AddBinding: true
+    CreateOrUpdateAppPoolForWebsite: true
+    AppPoolNameForWebsite: 'DefaultAppPool'
+    DotNetVersionForWebsite: 'v4.0'
+    PipeLineModeForWebsite: 'Integrated'
+    AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
   
 - task: IISWebAppDeploymentOnMachineGroup@0
   displayName: 'Deploy ITSS Website'
