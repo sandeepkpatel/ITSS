@@ -55,7 +55,7 @@ steps:
       tree $(Agent.WorkFolder)\1 /f
 
       echo "Build.ArtifactStagingDirectory:" 
-      tree $(Build.ArtifactStagingDirectory)\1 /f
+      tree $(Build.ArtifactStagingDirectory) /f
 
       # echo "$(Build.ArtifactStagingDirectory)"
 
