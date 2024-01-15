@@ -4,31 +4,57 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- master
-
-pool:
-  vmImage: 'windows-latest'
+- none
 
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  IISWebSiteName: 'Default Web Site'
 
-steps:
-- task: NuGetToolInstaller@1
+resources:
+  pipelines:
+    - pipeline: 'buildPipeline'
+      project: 'ITSS'
+      source: 'build-pipeline'
+      branch: 'master'
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+stages:
+  - stage: DeployWebsite
+    displayName: 'Deploy Website'
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+      - deployment: DeployWebsite
+        displayName: 'Deploy Website'
+        environment: 'Dev.CPC-spate-I0J1I'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: none
+                - download: 'buildPipeline'
+                  name: 'DownloadBuildArtifacts'
+                  displayName: 'Download Build Artifacts'
+                  artifact: 'drop'
+                
+                - task: IISWebAppManagementOnMachineGroup@0
+                  name: 'StopIIS'
+                  displayName: 'Stop IIS Website'
+                  inputs:
+                    IISDeploymentType: 'IISWebsite'
+                    ActionIISWebsite: 'StopWebsite'
+                    StartStopWebsiteName: 'Default Web Site'
+                - task: IISWebAppDeploymentOnMachineGroup@0
+                  name: 'DeployIIS'
+                  displayName: 'Deploy to IIS'
+                  inputs:
+                    WebSiteName: 'Default Web Site'
+                    VirtualApplication: 'ITSS'
+                    Package: '$(Pipeline.Workspace)\buildPipeline\drop\_PublishedWebsites\ITSS'
+                
+                - task: IISWebAppManagementOnMachineGroup@0
+                  name: 'StartIIS'
+                  displayName: 'Start IIS Website'
+                  inputs:
+                    IISDeploymentType: 'IISWebsite'
+                    ActionIISWebsite: 'StartWebsite'
+                    StartStopWebsiteName: 'Default Web Site'
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
