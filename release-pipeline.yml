@@ -13,7 +13,7 @@ resources:
   pipelines:
     - pipeline: 'buildPipeline'
       project: 'ITSS'
-      source: 'build-pipeline'
+      source: 'build-pipeline.yml'
       branch: 'master'
 
 stages:
